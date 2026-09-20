@@ -1,0 +1,14 @@
+__pycache__/
+*.py[cod]
+*.so
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.venv/
+/data/
+/outputs/
+*.pt
+*.pth
+*.partial
+*.log
+

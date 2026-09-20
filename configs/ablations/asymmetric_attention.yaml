@@ -1,0 +1,5 @@
+base: ../pretrain/w2rep_vitb16.yaml
+output_dir: outputs/ablation_asymmetric_attention
+model:
+  latent_reads_patches_only: true
+

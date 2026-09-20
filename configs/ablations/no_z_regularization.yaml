@@ -1,0 +1,5 @@
+base: ../pretrain/w2rep_vitb16.yaml
+output_dir: outputs/ablation_no_z_regularization
+objective:
+  z_l2: 0.0
+

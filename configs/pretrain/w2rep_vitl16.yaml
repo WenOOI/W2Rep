@@ -1,0 +1,57 @@
+output_dir: outputs/w2rep_vitl16
+
+data:
+  root: .
+  manifest: data/ssv2_manifest.json
+  split: train
+  frames: 8
+  stride: 3
+  cross_frame_targets: 3
+  image_size: 224
+  random_resized_crop_scale: [0.6, 1.0]
+  horizontal_flip: true
+
+model:
+  architecture: vitl16
+  patch_size: 16
+  z_tokens: 16
+  predictor_dim: 384
+  predictor_depth: 12
+  activation_checkpointing: true
+  latent_reads_patches_only: false
+
+mask:
+  encoder_scale: [0.85, 1.0]
+  predictor_scale: [0.15, 0.20]
+  aspect_ratio: [0.75, 1.5]
+  predictor_blocks: 4
+  min_keep: 10
+
+objective:
+  same_frame: true
+  cross_frame: true
+  signed_offset: true
+  use_clip_latents: true
+  z_context: all
+  z_l2: 1.0e-4
+
+ema:
+  start_momentum: 0.996
+  final_momentum: 1.0
+
+train:
+  batch_size_per_gpu: 32
+  workers: 12
+  peak_lr: 1.0e-3
+  start_lr: 2.0e-4
+  final_lr: 1.0e-6
+  weight_decay: 0.04
+  final_weight_decay: 0.4
+  betas: [0.9, 0.999]
+  warmup_steps: 10000
+  total_steps: 100000
+  gradient_clip: 1.0
+  log_every: 50
+  checkpoint_every: 10000
+  seed: 42
+  amp: bf16

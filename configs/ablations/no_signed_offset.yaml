@@ -1,0 +1,9 @@
+base: ../pretrain/w2rep_vitb16.yaml
+output_dir: outputs/ablation_no_signed_offset
+objective:
+  same_frame: true
+  cross_frame: true
+  signed_offset: false
+  use_clip_latents: true
+  z_context: all
+  z_l2: 1.0e-4
