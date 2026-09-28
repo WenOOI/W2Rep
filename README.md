@@ -19,7 +19,7 @@
   <sup>*</sup>Equal contribution &nbsp; <sup>†</sup>Corresponding author
 </p>
 
-**[Project page](docs/index.html)** · **Paper (coming soon)**
+**[Project page](https://wenooi.github.io/W2Rep/)** · **Paper (coming soon)**
 
 <img src="docs/assets/training_paradigms.png" width="100%" alt="Image SSL, video SSL, and W2Rep training paradigms">
 
