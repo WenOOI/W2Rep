@@ -68,7 +68,6 @@ w2rep/data/              video loading and spatial block masking
 w2rep/eval/              frozen linear probes and video fine-tuning
 w2rep/segmentation/      optional MMSegmentation adapter
 train.py                 distributed pretraining entry point
-tests/                   model, mask, and checkpoint compatibility tests
 ```
 
 The static project page lives in [`docs/`](docs/) and can be published directly
@@ -97,7 +96,7 @@ auxiliary clip latent, and neither alters the learned checkpoint.
 ## Installation
 
 ```bash
-python -m pip install -e '.[train,test]'
+python -m pip install -e '.[train]'
 ```
 
 The core model is self-contained and does not import another research
