@@ -1,13 +1,44 @@
-# W2Rep
+<div align="center">
 
-This directory is the release candidate for **W2Rep: Learning Visual
-Representations by Watching the World Change**. It contains only W2Rep training
-and downstream evaluation code. Implementations of comparison methods such as
-I-JEPA, V-JEPA, VideoMAE, and TDV are intentionally not vendored.
+<h1>W2Rep</h1>
 
-> Status: release candidate. The code has been separated from the experimental
-> workspace and checked for compatibility with the paper checkpoints. Choose a
-> project license and replace the example data paths before publishing.
+<h3>Learning Visual Representations by Watching the World Change</h3>
+
+<p>
+  Wen Huang<sup>1,*</sup> &nbsp;
+  Hang Guo<sup>1,*</sup> &nbsp;
+  Jiarui Yang<sup>2</sup> &nbsp;
+  Zheng Liu<sup>1</sup> &nbsp;
+  Tao Dai<sup>3,†</sup> &nbsp;
+  Shu-Tao Xia<sup>1</sup>
+</p>
+
+<p>
+  <sup>1</sup>Tsinghua Shenzhen International Graduate School, Tsinghua University<br>
+  <sup>2</sup>Nankai University &nbsp; <sup>3</sup>Shenzhen University<br>
+  <sup>*</sup>Equal contribution &nbsp; <sup>†</sup>Corresponding author
+</p>
+
+**[Project page](docs/index.html)** · **Paper (coming soon)**
+
+<img src="docs/assets/training_paradigms.png" width="100%" alt="Image SSL, video SSL, and W2Rep training paradigms">
+
+</div>
+
+W2Rep uses masked prediction within an image and across time to train one
+visual encoder that remains useful for either image or video input. This
+repository contains W2Rep pretraining and downstream evaluation code;
+implementations of external comparison methods are intentionally not vendored.
+
+<p align="center">
+  <img src="docs/resources/smooth_patch_attention_vitl_pred12/cross_frame_similarity.png" width="100%" alt="Cross-frame patch similarity from independently encoded W2Rep image features">
+</p>
+
+> **Release status.** The implementation is checkpoint-compatible and its
+> lightweight tests and multi-GPU training smoke test pass in a working
+> PyTorch environment. This is a code-only release; pretrained weights are not
+> distributed with this version. The final paper URL and clean-machine
+> reproduction should be added before public announcement.
 
 ## What is the final method?
 
@@ -28,12 +59,16 @@ The clip encoder uses ordinary bidirectional self-attention. Development-only
 context-supervised ("full") and asymmetric-attention branches are not the
 default method.
 
+<p align="center">
+  <img src="docs/assets/method_overview_v2.png" width="96%" alt="W2Rep pretraining architecture">
+</p>
+
 ## Layout
 
 ```text
 configs/                 ViT-B/16 and ViT-L/16 pretraining configurations
 scripts/                 launch examples without machine-specific paths
-tools/                   manifest conversion utilities
+tools/                   data, checkpoint, and visualization utilities
 w2rep/models/            self-contained encoder and predictor
 w2rep/data/              video loading and spatial block masking
 w2rep/eval/              frozen linear probes and video fine-tuning
@@ -42,6 +77,29 @@ train.py                 distributed pretraining entry point
 tests/                   model, mask, and checkpoint compatibility tests
 ```
 
+The static project page lives in [`docs/`](docs/) and can be published directly
+with GitHub Pages.
+
+## Cross-frame feature visualization
+
+The project page follows fixed source-image patches through several real
+videos. Each target frame is encoded independently, and the displayed heatmap
+is the cosine similarity between the fixed source feature and every
+target-frame patch feature. The renderer uses every decoded frame at the
+source frame rate and records the native feature grid, checkpoint hash, query
+patch, and output hash in JSON:
+
+```bash
+python tools/visualize_smooth_patch_attention.py \
+  --checkpoint /path/to/w2rep_checkpoint.pt \
+  --video /path/to/example.webm \
+  --output-dir outputs/patch_visualization
+```
+
+The same command also renders final-layer patch-to-patch attention averaged
+over all query patches and heads. Neither visualization uses a class token or
+auxiliary clip latent, and neither alters the learned checkpoint.
+
 ## Installation
 
 ```bash
@@ -49,16 +107,18 @@ python -m pip install -e '.[train,test]'
 ```
 
 The core model is self-contained and does not import another research
-repository. PyTorch, torchvision, OpenCV, NumPy, and PyYAML are sufficient for
-pretraining and classification evaluation. ADE20K evaluation additionally
-requires MMSegmentation; see `w2rep/segmentation/README.md`.
+repository. PyTorch, torchvision, OpenCV, Pillow, NumPy, and PyYAML are
+sufficient for pretraining and classification evaluation. ADE20K additionally
+requires MMSegmentation; see `w2rep/segmentation/README.md`. Datasets and
+optional evaluation frameworks must be obtained separately under their
+respective terms.
 
 The retained encoder has one interface for images and videos:
 
 ```python
 from w2rep.utils.checkpoint import load_encoder
 
-encoder, metadata = load_encoder("checkpoints/w2rep_vitb16.pt")
+encoder, metadata = load_encoder("/path/to/w2rep_checkpoint.pt")
 image_features = encoder(images, with_z=False)["patch_out"]       # [B,1,N,D]
 video_features = encoder(videos, with_z=False)["patch_out"]       # [B,T,N,D]
 ```
@@ -119,7 +179,7 @@ ImageNet uses a standard `ImageFolder` layout:
 
 ```bash
 python -m w2rep.eval.linear_probe image \
-  --checkpoint /path/to/ckpt_final.pt \
+  --checkpoint /path/to/w2rep_checkpoint.pt \
   --data-root /datasets/imagenet \
   --output-dir outputs/eval/imagenet
 ```
@@ -134,13 +194,13 @@ entry point supports the two protocols used in the paper:
 ```bash
 # Encode every sampled frame independently, then average.
 python -m w2rep.eval.linear_probe video \
-  --checkpoint /path/to/ckpt_final.pt \
+  --checkpoint /path/to/w2rep_checkpoint.pt \
   --manifest /data/ssv2.csv --encoding independent \
   --output-dir outputs/eval/ssv2_independent
 
 # Encode all sampled frames jointly, then average space and time.
 python -m w2rep.eval.linear_probe video \
-  --checkpoint /path/to/ckpt_final.pt \
+  --checkpoint /path/to/w2rep_checkpoint.pt \
   --manifest /data/ssv2.csv --encoding joint \
   --output-dir outputs/eval/ssv2_joint
 ```
@@ -171,13 +231,13 @@ Evaluation loads `target` by default. Paper-development checkpoints remain
 supported; the release model preserves their parameter names and tensor
 shapes.
 
-For publication, export an encoder-only artifact that omits optimizer and
-predictor state:
+To create a smaller encoder-only checkpoint that omits optimizer and predictor
+state, run:
 
 ```bash
 python tools/export_encoder_checkpoint.py \
   --input outputs/w2rep_vitb16/ckpt_final.pt \
-  --output checkpoints/w2rep_vitb16.pt
+  --output outputs/w2rep_vitb16_encoder.pt
 ```
 
 The command records the source checkpoint hash and prints the exported file's
@@ -192,4 +252,21 @@ SHA-256. Both full and encoder-only checkpoints use the same evaluation CLI.
 - External baselines retain their own objectives and repositories; they should
   not be inferred from this codebase.
 
-See `OPEN_SOURCE_CHECKLIST.md` before making the repository public.
+## Citation
+
+The arXiv identifier will be added after the preprint is registered. Until
+then, the project metadata is:
+
+```bibtex
+@article{huang2026w2rep,
+  title  = {W2Rep: Learning Visual Representations by Watching the World Change},
+  author = {Huang, Wen and Guo, Hang and Yang, Jiarui and Liu, Zheng and Dai, Tao and Xia, Shu-Tao},
+  year   = {2026}
+}
+```
+
+## License
+
+The source code is released under the
+[Apache License 2.0](LICENSE). Pretrained model weights are not included in
+this release.

@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="W2Rep learns image- and video-compatible visual representations by predicting across time.">
+  <meta property="og:title" content="W2Rep: Learning Visual Representations by Watching the World Change">
+  <meta property="og:description" content="Video change supervises visual features that remain useful for either images or videos.">
+  <meta property="og:image" content="assets/training_paradigms.png">
+  <title>W2Rep — Learning Visual Representations by Watching the World Change</title>
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+  <header class="hero">
+    <div class="hero-inner">
+      <p class="eyebrow">Visual representation learning from video</p>
+      <h1><span>W2Rep</span>: Learning Visual Representations<br class="wide-only"> by Watching the World Change</h1>
+      <p class="lead">Video change supervises visual features that remain useful when the encoder sees either one image or multiple frames.</p>
+      <div class="authors" aria-label="Authors">
+        <span>Wen Huang<sup>1,*</sup></span>
+        <span>Hang Guo<sup>1,*</sup></span>
+        <span>Jiarui Yang<sup>2</sup></span>
+        <span>Zheng Liu<sup>1</sup></span>
+        <span>Tao Dai<sup>3,†</sup></span>
+        <span>Shu-Tao Xia<sup>1</sup></span>
+      </div>
+      <p class="affiliations"><sup>1</sup>Tsinghua Shenzhen International Graduate School, Tsinghua University<br><sup>2</sup>Nankai University &nbsp; <sup>3</sup>Shenzhen University<br><sup>*</sup>Equal contribution &nbsp; <sup>†</sup>Corresponding author</p>
+      <nav class="actions" aria-label="Project links">
+        <span class="button disabled">Paper · coming soon</span>
+        <a class="button" href="#release">Code</a>
+        <span class="button disabled">Weights · not included</span>
+        <a class="button secondary" href="#citation">Citation</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="figure-section first">
+      <img class="hero-figure" src="assets/training_paradigms.png" alt="Comparison of image self-supervision, video self-supervision, and W2Rep">
+      <p class="caption"><strong>Different roles for video.</strong> Image SSL learns within one image, while conventional video SSL learns from a multi-frame input. W2Rep instead asks an independently encoded source image to support prediction at another moment, using visible video context and the requested time offset.</p>
+    </section>
+
+    <section class="motion-section" aria-label="Cross-frame feature correspondence">
+      <div class="section-heading compact">
+        <p class="eyebrow">Frame features across time</p>
+        <h2>Following image patches through changing videos</h2>
+        <p>For each video, a fixed patch is selected in the source image. Every frame is then encoded independently, and the heatmap shows the cosine similarity between that source feature and all target-frame patch features.</p>
+      </div>
+      <div class="video-grid feature-grid">
+        <figure class="video-card correspondence-card">
+          <video autoplay muted loop playsinline preload="metadata" poster="resources/smooth_patch_attention_vitl_pred12/cross_frame_similarity.png" aria-label="Following a cup patch while the cup is pushed">
+            <source src="resources/smooth_patch_attention_vitl_pred12/cross_frame_similarity.webm" type="video/webm">
+          </video>
+          <figcaption>Pushing a cup</figcaption>
+        </figure>
+        <figure class="video-card correspondence-card">
+          <video autoplay muted loop playsinline preload="metadata" poster="resources/frame_features_across_time_vitl_pred12/put_ball_in_cup_v4/cross_frame_similarity.png" aria-label="Following a ball patch while the ball is placed in a cup">
+            <source src="resources/frame_features_across_time_vitl_pred12/put_ball_in_cup_v4/cross_frame_similarity.webm" type="video/webm">
+          </video>
+          <figcaption>Putting a ball into a cup</figcaption>
+        </figure>
+        <figure class="video-card correspondence-card">
+          <video autoplay muted loop playsinline preload="metadata" poster="resources/frame_features_across_time_vitl_pred12/pour_water_v2/cross_frame_similarity.png" aria-label="Following a glass patch while water is poured">
+            <source src="resources/frame_features_across_time_vitl_pred12/pour_water_v2/cross_frame_similarity.webm" type="video/webm">
+          </video>
+          <figcaption>Pouring water into a glass</figcaption>
+        </figure>
+        <figure class="video-card correspondence-card">
+          <video autoplay muted loop playsinline preload="metadata" poster="resources/frame_features_across_time_vitl_pred12/open_book/cross_frame_similarity.png" aria-label="Following a book patch while the book is opened">
+            <source src="resources/frame_features_across_time_vitl_pred12/open_book/cross_frame_similarity.webm" type="video/webm">
+          </video>
+          <figcaption>Opening a book</figcaption>
+        </figure>
+        <figure class="video-card correspondence-card">
+          <video autoplay muted loop playsinline preload="metadata" poster="resources/frame_features_across_time_vitl_pred12/put_pen_in_box/cross_frame_similarity.png" aria-label="Following a pen patch while the pen is placed in a box">
+            <source src="resources/frame_features_across_time_vitl_pred12/put_pen_in_box/cross_frame_similarity.webm" type="video/webm">
+          </video>
+          <figcaption>Putting a pen into a box</figcaption>
+        </figure>
+        <figure class="video-card correspondence-card">
+          <video autoplay muted loop playsinline preload="metadata" poster="resources/frame_features_across_time_vitl_pred12/open_door/cross_frame_similarity.png" aria-label="Following a door patch while the door is opened">
+            <source src="resources/frame_features_across_time_vitl_pred12/open_door/cross_frame_similarity.webm" type="video/webm">
+          </video>
+          <figcaption>Opening a door</figcaption>
+        </figure>
+      </div>
+      <p class="caption"><strong>How to read the videos.</strong> Each row shows a fixed source image and query patch, the advancing target frame, and the corresponding 28 × 28 similarity map. Every frame is encoded independently; no clip-level forward pass, class token, or auxiliary latent is used.</p>
+    </section>
+
+    <section class="narrow" id="abstract">
+      <h2>Abstract</h2>
+      <p>Images capture the world at one moment, whereas video reveals how it changes. Image self-supervision learns spatial structure from a single moment, while video methods commonly learn temporal relationships inside a representation computed jointly from several frames. We ask whether watching a scene change can instead improve features available from one image without sacrificing the ability to represent video.</p>
+      <p>W2Rep is a masked feature-prediction framework in which an independently encoded source image participates in prediction at the same or another moment. The predictor is conditioned on visible video context, the queried location, and the signed time interval between source and target. After pretraining, the predictor and auxiliary inputs are removed; the retained visual encoder accepts either images or videos.</p>
+    </section>
+
+    <section id="method">
+      <div class="section-heading">
+        <p class="eyebrow">Method</p>
+        <h2>Prediction across time shapes the retained visual encoder</h2>
+      </div>
+      <img class="method-figure" src="assets/method_overview_v2.png" alt="Overview of W2Rep pretraining">
+      <div class="method-grid">
+        <div class="method-copy">
+          <ol>
+            <li><strong>Encode a source image independently.</strong> These are the image features retained for downstream use.</li>
+            <li><strong>Collect visible video context.</strong> A second pass through the same ViT summarizes evidence across the masked clip.</li>
+            <li><strong>Predict masked target features.</strong> The predictor receives source features, video context, spatial queries, and a signed time offset.</li>
+            <li><strong>Keep only the visual encoder.</strong> The learned ViT can later process one image or several frames jointly.</li>
+          </ol>
+          <a class="text-link" href="assets/method_overview_v2.pdf">Download the method diagram (PDF) →</a>
+        </div>
+        <div class="principle-card">
+          <span class="card-label">Core idea</span>
+          <p>Motion is used as <em>supervision</em>: observations of the same scene at different moments are related through prediction in one learned feature space.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="evidence">
+      <div class="section-heading">
+        <p class="eyebrow">Evidence</p>
+        <h2>What the model learns to use</h2>
+      </div>
+      <div class="result-stack">
+        <article class="result-card">
+          <img src="assets/cross_frame_similarity.png" alt="Cross-frame patch similarity maps for visual representation methods">
+          <div>
+            <h3>Cleaner cross-frame correspondence</h3>
+            <p>Patch features computed from individual frames form more localized cross-frame matches for W2Rep in these examples. The visualization complements, rather than replaces, the quantitative transfer evaluations in the paper.</p>
+          </div>
+        </article>
+        <article class="result-card reverse">
+          <img src="assets/temporal_prediction.png" alt="Temporal target prediction matrices under controlled interventions">
+          <div>
+            <h3>Prediction depends on time and ordered video evidence</h3>
+            <p>The correct signed offset produces a clear diagonal, while wrong offsets, shuffled clips, or removed video context disrupt target retrieval.</p>
+          </div>
+        </article>
+        <article class="result-card">
+          <img src="assets/latent_context.png" alt="Diagnostics of the auxiliary video-context latents">
+          <div>
+            <h3>The auxiliary latents carry useful clip context</h3>
+            <p>Temporal order affects their action-predictive content, and matched video context supports target prediction better than context borrowed from another clip.</p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="release" id="release">
+      <div>
+        <p class="eyebrow">Open-source release</p>
+        <h2>Training and evaluation code</h2>
+        <p>The release contains self-contained W2Rep pretraining, portable checkpoint loading, frozen image and video probes, video fine-tuning, and an optional ADE20K adapter.</p>
+      </div>
+      <pre><code>python -m pip install -e '.[train,test]'
+
+torchrun --standalone --nproc_per_node=8 train.py \
+  --config configs/pretrain/w2rep_vitb16.yaml</code></pre>
+      <p class="release-note">The source code is released under Apache-2.0. Pretrained weights are not included in this release; the paper link will be activated when available.</p>
+    </section>
+
+    <section class="narrow citation" id="citation">
+      <h2>Citation</h2>
+      <p>The final BibTeX entry will be added when the arXiv identifier is assigned.</p>
+      <pre><code>@article{huang2026w2rep,
+  title  = {W2Rep: Learning Visual Representations by Watching the World Change},
+  author = {Huang, Wen and Guo, Hang and Yang, Jiarui and Liu, Zheng and Dai, Tao and Xia, Shu-Tao},
+  year   = {2026}
+}</code></pre>
+    </section>
+  </main>
+
+  <footer>
+    <p>W2Rep · Research project page · 2026</p>
+  </footer>
+</body>
+</html>

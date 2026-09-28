@@ -5,10 +5,14 @@ __pycache__/
 .mypy_cache/
 .ruff_cache/
 .venv/
+build/
+dist/
+*.egg-info/
+.DS_Store
 /data/
 /outputs/
 *.pt
 *.pth
+*.ckpt
 *.partial
 *.log
-

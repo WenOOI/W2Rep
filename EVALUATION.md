@@ -26,7 +26,7 @@ The paper protocol directly resizes RGB images to 224 x 224.
 
 ```bash
 python -m w2rep.eval.linear_probe image \
-  --checkpoint checkpoints/w2rep_vitb16.pt \
+  --checkpoint /path/to/w2rep_checkpoint.pt \
   --data-root /datasets/imagenet \
   --output-dir outputs/imagenet
 ```
@@ -52,7 +52,7 @@ uniformly samples 8 frames over each full video and directly resizes them to
 
 ```bash
 python -m w2rep.eval.linear_probe video \
-  --checkpoint checkpoints/w2rep_vitb16.pt \
+  --checkpoint /path/to/w2rep_checkpoint.pt \
   --manifest data/ssv2.csv \
   --data-root /datasets/ssv2 \
   --encoding joint \
@@ -69,7 +69,7 @@ does not select a checkpoint.
 
 ```bash
 NPROC_PER_NODE=8 scripts/finetune_video.sh \
-  --checkpoint checkpoints/w2rep_vitb16.pt \
+  --checkpoint /path/to/w2rep_checkpoint.pt \
   --manifest data/ssv2.csv \
   --data-root /datasets/ssv2 \
   --output-dir outputs/ssv2_full_finetune
@@ -89,4 +89,3 @@ and intentionally isolated from the core PyTorch dependencies.
 Any change to frame sampling, image resizing, checkpoint key, encoding mode,
 probe seed, or training duration is a different protocol. The evaluation code
 records these choices so caches and results cannot be silently mixed.
-

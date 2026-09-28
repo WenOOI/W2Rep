@@ -90,6 +90,18 @@ def restore_rng_state(state: dict[str, Any]) -> None:
     torch.cuda.set_rng_state_all(state["cuda"])
 
 
+def advance_iterator_preserving_rng(data_iterator, batches: int) -> None:
+    """Replay consumed batches without changing the saved main-process RNG."""
+    post_checkpoint_rng = rng_state()
+    try:
+        for _ in range(batches):
+            next(data_iterator)
+    except StopIteration as error:
+        raise RuntimeError("Saved batch offset exceeds current epoch length") from error
+    finally:
+        restore_rng_state(post_checkpoint_rng)
+
+
 @torch.no_grad()
 def update_ema(target: nn.Module, student: nn.Module, momentum: float) -> None:
     for target_parameter, student_parameter in zip(
@@ -461,11 +473,13 @@ def main() -> None:
                 f"[resume] advancing {batches_in_epoch} batches in epoch {epoch}",
                 flush=True,
             )
-        for _ in range(batches_in_epoch):
-            try:
-                next(data_iterator)
-            except StopIteration as error:
-                raise RuntimeError("Saved batch offset exceeds current epoch length") from error
+        # Replaying the data loader is needed to restore the sampler/worker
+        # position, but it must not advance the main-process RNG beyond the
+        # state saved after the last completed update.  This matters directly
+        # for workers=0, where dataset sampling and augmentation use the main
+        # process, and keeps resume behavior well-defined for every loader
+        # configuration.
+        advance_iterator_preserving_rng(data_iterator, batches_in_epoch)
     collator.set_call_index(epoch * len(loader) + batches_in_epoch)
 
     while step < config.train.total_steps:

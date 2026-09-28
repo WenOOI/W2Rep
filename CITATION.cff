@@ -1,0 +1,26 @@
+cff-version: 1.2.0
+message: "If you use W2Rep, please cite the accompanying paper."
+title: "W2Rep: Learning Visual Representations by Watching the World Change"
+type: software
+version: 0.1.0
+license: Apache-2.0
+authors:
+  - family-names: Huang
+    given-names: Wen
+    affiliation: Tsinghua Shenzhen International Graduate School, Tsinghua University
+  - family-names: Guo
+    given-names: Hang
+    affiliation: Tsinghua Shenzhen International Graduate School, Tsinghua University
+  - family-names: Yang
+    given-names: Jiarui
+    affiliation: Nankai University
+  - family-names: Liu
+    given-names: Zheng
+    affiliation: Tsinghua Shenzhen International Graduate School, Tsinghua University
+  - family-names: Dai
+    given-names: Tao
+    affiliation: Shenzhen University
+    email: daitao.edu@gmail.com
+  - family-names: Xia
+    given-names: Shu-Tao
+    affiliation: Tsinghua Shenzhen International Graduate School, Tsinghua University
