@@ -141,7 +141,7 @@ section { max-width: 1180px; margin: 0 auto; padding: 86px 28px; }
 .caption { max-width: 990px; margin: 18px auto 0; color: var(--muted); font-size: .93rem; text-align: center; }
 .section-heading { max-width: 850px; margin-bottom: 38px; }
 .method-grid { display: grid; grid-template-columns: 1.3fr .7fr; gap: 28px; align-items: stretch; }
-.method-copy, .principle-card, .release {
+.method-copy, .principle-card {
   background: var(--white);
   border: 1px solid var(--line);
   border-radius: 18px;
@@ -150,7 +150,6 @@ section { max-width: 1180px; margin: 0 auto; padding: 86px 28px; }
 .method-copy { padding: 30px 34px; }
 .method-copy ol { margin: 0 0 20px; padding-left: 22px; }
 .method-copy li { margin: 0 0 13px; }
-.text-link { font-weight: 750; text-decoration: none; }
 .principle-card {
   display: flex;
   flex-direction: column;
@@ -176,11 +175,6 @@ section { max-width: 1180px; margin: 0 auto; padding: 86px 28px; }
 .result-card.reverse { grid-template-columns: minmax(260px, .75fr) minmax(0, 1.6fr); }
 .result-card.reverse img { order: 2; }
 .result-card p { margin: 0; color: var(--muted); }
-.release { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; max-width: 1124px; margin-top: 50px; margin-bottom: 50px; }
-.release > * { margin-left: 34px; margin-right: 34px; }
-.release > div { margin-top: 34px; }
-.release > pre { align-self: center; }
-.release-note { grid-column: 1 / -1; margin-top: -8px; margin-bottom: 28px; color: var(--muted); font-size: .9rem; }
 pre {
   overflow-x: auto;
   margin: 0;
@@ -198,11 +192,9 @@ footer { padding: 28px; color: var(--muted); border-top: 1px solid var(--line); 
   .hero { padding-top: 58px; }
   .wide-only { display: none; }
   section { padding: 64px 20px; }
-  .method-grid, .result-card, .result-card.reverse, .release { grid-template-columns: 1fr; }
+  .method-grid, .result-card, .result-card.reverse { grid-template-columns: 1fr; }
   .video-grid, .video-grid.attention-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .result-card.reverse img { order: 0; }
-  .release > * { margin-left: 24px; margin-right: 24px; }
-  .release-note { grid-column: auto; }
 }
 
 @media (max-width: 520px) {

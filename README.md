@@ -34,12 +34,6 @@ implementations of external comparison methods are intentionally not vendored.
   <img src="docs/resources/smooth_patch_attention_vitl_pred12/cross_frame_similarity.png" width="100%" alt="Cross-frame patch similarity from independently encoded W2Rep image features">
 </p>
 
-> **Release status.** The implementation is checkpoint-compatible and its
-> lightweight tests and multi-GPU training smoke test pass in a working
-> PyTorch environment. This is a code-only release; pretrained weights are not
-> distributed with this version. The final paper URL and clean-machine
-> reproduction should be added before public announcement.
-
 ## What is the final method?
 
 The default configuration matches the method used for the paper's main W2Rep
