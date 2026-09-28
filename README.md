@@ -31,7 +31,9 @@ repository contains W2Rep pretraining and downstream evaluation code;
 implementations of external comparison methods are intentionally not vendored.
 
 <p align="center">
-  <img src="docs/resources/smooth_patch_attention_vitl_pred12/cross_frame_similarity.png" width="100%" alt="Cross-frame patch similarity from independently encoded W2Rep image features">
+  <a href="https://wenooi.github.io/W2Rep/">
+    <img src="docs/assets/cross_frame_similarity.gif" width="100%" alt="Cross-frame patch similarity from independently encoded W2Rep image features">
+  </a>
 </p>
 
 ## What is the final method?
