@@ -30,36 +30,11 @@ visual encoder that remains useful for either image or video input. This
 repository contains W2Rep pretraining and downstream evaluation code;
 implementations of external comparison methods are intentionally not vendored.
 
-<table>
-  <tr>
-    <td align="center" width="50%">
-      <a href="https://wenooi.github.io/W2Rep/">
-        <img src="docs/assets/cross_frame_similarity_cup.gif" width="400" alt="Cross-frame feature tracking while pushing a cup"><br>
-        <sub><b>Pushing a cup</b></sub>
-      </a>
-    </td>
-    <td align="center" width="50%">
-      <a href="https://wenooi.github.io/W2Rep/">
-        <img src="docs/assets/cross_frame_similarity_ball.gif" width="400" alt="Cross-frame feature tracking while putting a ball into a cup"><br>
-        <sub><b>Putting a ball into a cup</b></sub>
-      </a>
-    </td>
-  </tr>
-  <tr>
-    <td align="center" width="50%">
-      <a href="https://wenooi.github.io/W2Rep/">
-        <img src="docs/assets/cross_frame_similarity_pour.gif" width="400" alt="Cross-frame feature tracking while pouring water"><br>
-        <sub><b>Pouring water</b></sub>
-      </a>
-    </td>
-    <td align="center" width="50%">
-      <a href="https://wenooi.github.io/W2Rep/">
-        <img src="docs/assets/cross_frame_similarity_book.gif" width="400" alt="Cross-frame feature tracking while opening a book"><br>
-        <sub><b>Opening a book</b></sub>
-      </a>
-    </td>
-  </tr>
-</table>
+| [![Cross-frame feature tracking while pushing a cup](docs/assets/cross_frame_similarity_cup.gif)](https://wenooi.github.io/W2Rep/) | [![Cross-frame feature tracking while putting a ball into a cup](docs/assets/cross_frame_similarity_ball.gif)](https://wenooi.github.io/W2Rep/) |
+|:---:|:---:|
+| **Pushing a cup** | **Putting a ball into a cup** |
+| [![Cross-frame feature tracking while pouring water](docs/assets/cross_frame_similarity_pour.gif)](https://wenooi.github.io/W2Rep/) | [![Cross-frame feature tracking while opening a book](docs/assets/cross_frame_similarity_book.gif)](https://wenooi.github.io/W2Rep/) |
+| **Pouring water** | **Opening a book** |
 
 ## What is the final method?
 
