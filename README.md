@@ -34,13 +34,13 @@ implementations of external comparison methods are intentionally not vendored.
   <tr>
     <td align="center" width="50%">
       <a href="https://wenooi.github.io/W2Rep/">
-        <img src="docs/assets/cross_frame_similarity_cup.gif" width="100%" alt="Cross-frame feature tracking while pushing a cup"><br>
+        <img src="docs/assets/cross_frame_similarity_cup.gif" width="400" alt="Cross-frame feature tracking while pushing a cup"><br>
         <sub><b>Pushing a cup</b></sub>
       </a>
     </td>
     <td align="center" width="50%">
       <a href="https://wenooi.github.io/W2Rep/">
-        <img src="docs/assets/cross_frame_similarity_ball.gif" width="100%" alt="Cross-frame feature tracking while putting a ball into a cup"><br>
+        <img src="docs/assets/cross_frame_similarity_ball.gif" width="400" alt="Cross-frame feature tracking while putting a ball into a cup"><br>
         <sub><b>Putting a ball into a cup</b></sub>
       </a>
     </td>
@@ -48,13 +48,13 @@ implementations of external comparison methods are intentionally not vendored.
   <tr>
     <td align="center" width="50%">
       <a href="https://wenooi.github.io/W2Rep/">
-        <img src="docs/assets/cross_frame_similarity_pour.gif" width="100%" alt="Cross-frame feature tracking while pouring water"><br>
+        <img src="docs/assets/cross_frame_similarity_pour.gif" width="400" alt="Cross-frame feature tracking while pouring water"><br>
         <sub><b>Pouring water</b></sub>
       </a>
     </td>
     <td align="center" width="50%">
       <a href="https://wenooi.github.io/W2Rep/">
-        <img src="docs/assets/cross_frame_similarity_book.gif" width="100%" alt="Cross-frame feature tracking while opening a book"><br>
+        <img src="docs/assets/cross_frame_similarity_book.gif" width="400" alt="Cross-frame feature tracking while opening a book"><br>
         <sub><b>Opening a book</b></sub>
       </a>
     </td>
