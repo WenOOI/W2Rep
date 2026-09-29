@@ -19,7 +19,7 @@
   <sup>*</sup>Equal contribution &nbsp; <sup>†</sup>Corresponding author
 </p>
 
-**[Project page](https://wenooi.github.io/W2Rep/)** · **Paper (coming soon)**
+**[Project page](https://wenooi.github.io/W2Rep/)** · **[Paper](https://arxiv.org/abs/2609.35464)**
 
 <img src="docs/assets/training_paradigms.png" width="100%" alt="Image SSL, video SSL, and W2Rep training paradigms">
 
@@ -249,14 +249,15 @@ SHA-256. Both full and encoder-only checkpoints use the same evaluation CLI.
 
 ## Citation
 
-The arXiv identifier will be added after the preprint is registered. Until
-then, the project metadata is:
-
 ```bibtex
 @article{huang2026w2rep,
-  title  = {W2Rep: Learning Visual Representations by Watching the World Change},
-  author = {Huang, Wen and Guo, Hang and Yang, Jiarui and Liu, Zheng and Dai, Tao and Xia, Shu-Tao},
-  year   = {2026}
+  title         = {W2Rep: Learning Visual Representations by Watching the World Change},
+  author        = {Huang, Wen and Guo, Hang and Yang, Jiarui and Liu, Zheng and Dai, Tao and Xia, Shu-Tao},
+  year          = {2026},
+  eprint        = {2609.35464},
+  archivePrefix = {arXiv},
+  primaryClass  = {cs.CV},
+  url           = {https://arxiv.org/abs/2609.35464}
 }
 ```
 
